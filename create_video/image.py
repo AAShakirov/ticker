@@ -1,22 +1,50 @@
+import os
 from PIL import Image, ImageDraw, ImageFont
+
+def get_text():
+    text = input()
+    return text
 
 def make_empty():
     img = Image.new('RGB', (100, 100), 'white')
     img.save('empty.png')
-    return img
 
-def make_images(img):
+def get_length_text(text):
+    length_text = text.__len__() * 5
+    return length_text
+
+def make_images(text, length_text):
     font = ImageFont.load_default()
-    for i in range(100):
+    length_text *= 2
+    for i in range(100 + length_text):
         img = Image.open('empty.png')
         idraw = ImageDraw.Draw(img)
-        idraw.text((i, 50), 'TEST', (0, 0, 0), font=font)
+        idraw.text((i - length_text, 50), text, (0, 0, 0), font=font)
         img.save(f'images/image_{i}.png')
 
+def delete_match_image(length_text):
+    filenames = [int(path.split('_')[1].split('.')[0]) for path in 
+                 os.listdir(r'/home/arthur/Documents/code/it-solution/images')]
+    filenames.sort()
+    images = {}
+    image_empty = Image.open('images/image_0.png')
+    for i in range(1, length_text):
+        try:
+            images[i] = Image.open(f'images/image_{filenames[i]}.png')
+        except FileNotFoundError:
+            continue
+        if image_empty == images[i]:
+            file = f'image_{(filenames[i])}.png'
+            location = r'/home/arthur/Documents/code/it-solution/images'
+            path = os.path.join(location, file)  
+            os.remove(path)
+
 def main():
-    img = make_empty()
-    make_images(img)
+    text = get_text()
+    length_text = get_length_text(text)
+    make_empty()
+    make_images(text, length_text)
+    delete_match_image(length_text)
 
 if __name__ == '__main__':
     main()
-
