@@ -1,13 +1,18 @@
-import os
+import os, glob
 from PIL import Image, ImageDraw, ImageFont
 from video import make_video
+
+def clear_folder():
+    files = glob.glob('/home/arthur/Documents/code/it-solution/images')
+    for file in files:
+        os.remove(file)
 
 def get_text():
     text = input()
     return text
 
 def make_empty():
-    img = Image.new('RGB', (100, 100), 'white')
+    img = Image.new('RGB', (100, 100), (147, 112, 219))
     img.save('empty.png')
 
 def get_length_text(text):
@@ -20,7 +25,7 @@ def make_images(text, length_text):
     for i in range(100 + length_text):
         img = Image.open('empty.png')
         idraw = ImageDraw.Draw(img)
-        idraw.text((i - length_text, 50), text, (0, 0, 0), font=font)
+        idraw.text((i - length_text, 50), text, (0, 255, 255), font=font)
         img.save(f'images/image_{i}.png')
 
 def delete_match_image(length_text):
@@ -41,6 +46,7 @@ def delete_match_image(length_text):
             os.remove(path)
 
 def main():
+    clear_folder()
     text = get_text()
     length_text = get_length_text(text)
     make_empty()
