@@ -1,5 +1,6 @@
 import os
 from PIL import Image, ImageDraw, ImageFont
+from video import make_video
 
 def get_text():
     text = input()
@@ -45,6 +46,7 @@ def main():
     make_empty()
     make_images(text, length_text)
     delete_match_image(length_text)
+    make_video()
 
 if __name__ == '__main__':
     main()
