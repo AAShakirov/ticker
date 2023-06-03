@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw, ImageFont
 from video import make_video
 
 def clear_folder():
-    files = glob.glob('/home/arthur/Documents/code/it-solution/images')
+    files = glob.glob('/home/arthur/Documents/code/it-solution/images/*')
     for file in files:
         os.remove(file)
 
