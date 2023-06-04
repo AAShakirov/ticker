@@ -3,7 +3,7 @@ import cv2, os
 def make_video():
     filenames = [int(path.split('_')[1].split('.')[0]) for path in 
                  os.listdir(r'/home/arthur/Documents/code/it-solution/images')]
-    filenames.sort()
+    filenames.sort(reverse=True)
     speed = filenames.__len__() / 3
     out = cv2.VideoWriter("/home/arthur/Documents/code/it-solution/video.mov", 
                         cv2.VideoWriter_fourcc('M','J','P','G'), speed, (100, 100)) 

@@ -3,12 +3,12 @@ from PIL import Image, ImageDraw, ImageFont
 from video import make_video
 
 def clear_folder():
-    files = glob.glob('/home/arthur/Documents/code/it-solution/images/*')
+    files = glob.glob(r'images/*')
     for file in files:
         os.remove(file)
 
 def get_text():
-    text = input()
+    text = input('Please, enter the text: ')
     return text
 
 def make_empty():
@@ -20,17 +20,17 @@ def get_length_text(text):
     return length_text
 
 def make_images(text, length_text):
-    font = ImageFont.load_default()
+    font = ImageFont.truetype('Ubuntu-B.ttf')
     length_text *= 2
     for i in range(100 + length_text):
         img = Image.open('empty.png')
         idraw = ImageDraw.Draw(img)
         idraw.text((i - length_text, 50), text, (0, 255, 255), font=font)
-        img.save(f'images/image_{i}.png')
+        img.save(f'images/image_{i}.png', 'PNG', quality=100, optimize=True, progressive=True, icc_profile=img.info.get('icc_profile'), encoding='utf-8') 
 
 def delete_match_image(length_text):
     filenames = [int(path.split('_')[1].split('.')[0]) for path in 
-                 os.listdir(r'/home/arthur/Documents/code/it-solution/images')]
+                 os.listdir(r'images')]
     filenames.sort()
     images = {}
     image_empty = Image.open('images/image_0.png')
@@ -41,7 +41,7 @@ def delete_match_image(length_text):
             continue
         if image_empty == images[i]:
             file = f'image_{(filenames[i])}.png'
-            location = r'/home/arthur/Documents/code/it-solution/images'
+            location = r'images'
             path = os.path.join(location, file)  
             os.remove(path)
 
